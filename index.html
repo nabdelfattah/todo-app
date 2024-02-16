@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="./images/favicon-32x32.png"
+    />
+    <link href="styles/styles.css" role="stylesheet" />
+    <script defer src="scripts/app.js"></script>
+    <title>Frontend Mentor | Todo app</title>
+
+    <style>
+      .attribution {
+        font-size: 11px;
+        text-align: center;
+      }
+      .attribution a {
+        color: hsl(228, 45%, 44%);
+      }
+    </style>
+  </head>
+
+  <body class="app">
+    <main class="main">
+      <div class="container">
+        <header>
+          <h1 class="heading-primary">Todo</h1>
+          <img
+            class="theme-toggle-icon"
+            src="images/icon-sun.svg"
+            alt="light mode"
+            areia-label="Toggle Dark/Light Mode"
+          />
+        </header>
+        <form class="form">
+          <input type="text" name="task" placeholder="Currently typing" />
+        </form>
+        <div class="task-list-wrapper">
+          <ul class="task-list">
+            <!-- <li class="task">
+              <div
+                class="check-box"
+                aria-label="Check as complete"
+                tabindex="0"
+              >
+                <img
+                  class="icon-check"
+                  src="images/icon-check.svg"
+                  alt="check icon"
+                />
+              </div>
+              <p class="task-text"></p>
+              <img
+                class="icon-delete"
+                aria-label="Delete task"
+                tabindex="0"
+                src="images/icon-cross.svg"
+                alt="delete icon"
+              />
+            </li> -->
+          </ul>
+          <div class="list-management-panel">
+            <!-- Add dynamic number -->
+            <p class="items-counter"><span></span>Items left</p>
+            <div>
+              <button class="filter-all">All</button>
+              <button class="filter-active">Active</button>
+              <button class="filter-completed">Completed</button>
+            </div>
+            <button>Clear Completed</button>
+          </div>
+        </div>
+      </div>
+
+      <p class="drag-hint">Drag and drop to reorder list</p>
+    </main>
+
+    <footer class="attribution">
+      Challenge by
+      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
+        >Frontend Mentor</a
+      >. Coded by
+      <a href="https://github.com/nabdelfattah" target="_blank"
+        >Nada Abdelfattah</a
+      >.
+    </footer>
+  </body>
+</html>
