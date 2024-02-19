@@ -19,7 +19,7 @@
 .form,
 .task-list-wrapper {
   background-color: var(--Very-Light-Gray);
-  border-radius: 4px;
+  border-radius: var(--border-radius);
 }
 .form {
   margin: 4rem 0 2.4rem;
@@ -79,9 +79,7 @@
     @include mixins.gradient-circle();
   }
   .icon-delete {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: initial;
+    @include mixins.show-delete-icon();
   }
 }
 .task.task--checked {

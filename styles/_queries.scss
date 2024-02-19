@@ -1,0 +1,79 @@
+@use "_mixins";
+// adjust background-image to stretch but not shrink
+@media (max-width: 1440px) {
+  .app {
+    background-size: auto 36%;
+    background-position-x: 28%;
+  }
+}
+// show the delete icon in mobile devices
+@media (max-width: 81rem) {
+  .icon-delete {
+    @include mixins.show-delete-icon();
+  }
+}
+///////////////////////////////////////////////
+/// styles for screen lower than 624 px
+@media (max-width: 39em) {
+  html {
+    font-size: 50%;
+  }
+  .app {
+    background-image: url(../images/bg-mobile-light.jpg);
+    background-size: 100% 32%;
+    background-position-x: 28%;
+  }
+  .main {
+    width: 85%;
+  }
+  .TODO-container {
+    margin: 6.9rem 0 0;
+  }
+  .task-text,
+  .input,
+  input::placeholder {
+    font-size: 1.6rem;
+  }
+
+  // adjuct the list managment panel
+  .task-list-wrapper {
+    position: relative;
+  }
+  .filter {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    margin: 2rem 0;
+    // same styles as its parent
+    justify-content: center;
+    padding: 1.9rem 2.4rem;
+    background-color: var(--Very-Light-Gray);
+    width: 100%;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.1);
+  }
+  .icon-delete {
+    height: 1.8rem;
+  }
+  .drag-hint {
+    margin-top: 13rem;
+  }
+}
+
+@media (max-width: 39em) {
+  .app:has(.dark) {
+    background-image: url(../images/bg-mobile-dark.jpg);
+    .filter {
+      background-color: hsl(235, 24%, 19%);
+    }
+  }
+}
+
+/////////////////////////////////////////
+/// styles for phones
+@media (max-width: 380px) {
+  .main {
+    max-width: var(--width-mob);
+  }
+}

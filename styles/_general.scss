@@ -2,6 +2,7 @@
 /// variables
 :root {
   --width-desktop: 58rem;
+  --width-mob: 40rem;
 
   --color-primary: hsl(220, 98%, 61%);
   --bg-gradient: linear-gradient(
@@ -11,6 +12,8 @@
   );
 
   --animation: all 0.3s;
+
+  --border-radius: 4px;
 
   --Very-Light-Gray: hsl(0, 0%, 98%);
   --Very-Light-Grayish-Blue: hsl(236, 33%, 92%);
@@ -68,6 +71,7 @@ button {
   grid-template-columns: auto;
   justify-items: center;
 }
+
 .main {
   width: 100%;
   max-width: var(--width-desktop);

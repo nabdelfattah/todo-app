@@ -3,7 +3,7 @@
 .app:has(.dark) {
   & {
     background-image: url(../images/bg-desktop-dark.jpg);
-    background-color: hsl(235, 21%, 11%); //Very Dark Blue
+    background-color: hsl(235, 21%, 11%);
   }
   .form,
   .task-list-wrapper {

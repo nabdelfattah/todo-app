@@ -20,3 +20,9 @@
   -webkit-mask-composite: xor;
   mask-composite: exclude;
 }
+
+@mixin show-delete-icon() {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: initial;
+}
