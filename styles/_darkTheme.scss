@@ -1,0 +1,59 @@
+@use "mixins";
+
+.app:has(.dark) {
+  & {
+    background-image: url(../images/bg-desktop-dark.jpg);
+    background-color: hsl(235, 21%, 11%); //Very Dark Blue
+  }
+  .form,
+  .task-list-wrapper {
+    background-color: hsl(235, 24%, 19%); //Very Dark Desaturated Blue
+  }
+  .form::before,
+  .check-box {
+    border: 2px solid hsl(237, 14%, 26%);
+  }
+  .task {
+    border-bottom-color: hsl(237, 14%, 26%);
+  }
+  .task-text,
+  .input {
+    color: hsl(234, 39%, 85%);
+  }
+  .input::placeholder,
+  .icon-delete,
+  .filter > *,
+  .drag-hint {
+    color: hsl(234, 11%, 52%);
+  }
+  .task:hover {
+    .check-box {
+      @include mixins.gradient-circle();
+    }
+  }
+  .task.task--checked {
+    .check-box {
+      -webkit-mask: none;
+      background-image: var(--bg-gradient);
+    }
+    .icon-check {
+      display: initial;
+    }
+  }
+  .task .icon-check {
+    display: none;
+  }
+
+  .task--checked .task-text,
+  .items-counter,
+  .btn-clear {
+    color: hsl(233, 14%, 35%);
+  }
+  .filter > *:hover,
+  .btn-clear:hover {
+    color: hsl(236, 33%, 92%);
+  }
+  .filter--selected {
+    color: var(--color-primary);
+  }
+}

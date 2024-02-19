@@ -10,41 +10,43 @@
       sizes="32x32"
       href="./images/favicon-32x32.png"
     />
-    <link href="styles/styles.css" role="stylesheet" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link href="styles/styles.scss" rel="stylesheet" />
     <script defer src="scripts/app.js"></script>
-    <title>Frontend Mentor | Todo app</title>
-
-    <style>
-      .attribution {
-        font-size: 11px;
-        text-align: center;
-      }
-      .attribution a {
-        color: hsl(228, 45%, 44%);
-      }
-    </style>
+    <title>Todo app</title>
   </head>
 
   <body class="app">
-    <main class="main">
-      <div class="container">
-        <header>
+    <main class="main dark">
+      <div class="TODO-container">
+        <header class="TODO-header">
           <h1 class="heading-primary">Todo</h1>
           <img
-            class="theme-toggle-icon"
-            src="images/icon-sun.svg"
-            alt="light mode"
+            class="icon theme-toggle-icon"
+            src="images/icon-moon.svg"
+            alt="dark mode icon"
             areia-label="Toggle Dark/Light Mode"
           />
         </header>
         <form class="form">
-          <input type="text" name="task" placeholder="Currently typing" />
+          <input
+            class="input"
+            type="text"
+            name="task"
+            placeholder="Create a new todo..."
+          />
         </form>
         <div class="task-list-wrapper">
           <ul class="task-list">
-            <!-- <li class="task">
+            <!-- adding arbitrary tasks to help figuring out the styles -->
+            <li class="task task--checked">
               <div
-                class="check-box"
+                class="icon check-box"
                 aria-label="Check as complete"
                 tabindex="0"
               >
@@ -54,40 +56,51 @@
                   alt="check icon"
                 />
               </div>
-              <p class="task-text"></p>
+              <p class="task-text">Hello World</p>
               <img
-                class="icon-delete"
+                class="icon icon-delete"
                 aria-label="Delete task"
                 tabindex="0"
                 src="images/icon-cross.svg"
                 alt="delete icon"
               />
-            </li> -->
+            </li>
+            <li class="task">
+              <div
+                class="icon check-box"
+                aria-label="Check as complete"
+                tabindex="0"
+              >
+                <img
+                  class="icon-check"
+                  src="images/icon-check.svg"
+                  alt="check icon"
+                />
+              </div>
+              <p class="task-text">Hello World</p>
+              <img
+                class="icon icon-delete"
+                aria-label="Delete task"
+                tabindex="0"
+                src="images/icon-cross.svg"
+                alt="delete icon"
+              />
+            </li>
           </ul>
           <div class="list-management-panel">
             <!-- Add dynamic number -->
-            <p class="items-counter"><span></span>Items left</p>
-            <div>
-              <button class="filter-all">All</button>
+            <p class="items-counter"><span>0</span> items left</p>
+            <div class="filter">
+              <button class="filter-all filter--selected">All</button>
               <button class="filter-active">Active</button>
               <button class="filter-completed">Completed</button>
             </div>
-            <button>Clear Completed</button>
+            <button class="btn-clear">Clear Completed</button>
           </div>
         </div>
       </div>
 
       <p class="drag-hint">Drag and drop to reorder list</p>
     </main>
-
-    <footer class="attribution">
-      Challenge by
-      <a href="https://www.frontendmentor.io?ref=challenge" target="_blank"
-        >Frontend Mentor</a
-      >. Coded by
-      <a href="https://github.com/nabdelfattah" target="_blank"
-        >Nada Abdelfattah</a
-      >.
-    </footer>
   </body>
 </html>

@@ -1,0 +1,135 @@
+@use "mixins";
+
+.TODO-container {
+  margin: 9.9rem 0 0;
+}
+.TODO-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.heading-primary {
+  font-size: 3.7rem;
+  font-weight: 700;
+  letter-spacing: 13px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.form,
+.task-list-wrapper {
+  background-color: var(--Very-Light-Gray);
+  border-radius: 4px;
+}
+.form {
+  margin: 4rem 0 2.4rem;
+  @include mixins.spacing();
+  &::before {
+    content: "";
+    display: block;
+    @include mixins.check-box();
+  }
+}
+.input {
+  border: none;
+  background-color: inherit;
+  width: 100%;
+  font-size: 2rem;
+  color: var(--Very-Dark-Grayish-Blue);
+  &::placeholder {
+    color: var(--Dark-Grayish-Blue);
+  }
+}
+.input:focus-visible {
+  outline: none;
+  caret-color: var(--color-primary);
+  &::placeholder {
+    visibility: hidden;
+  }
+}
+
+.task-list-wrapper {
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.1);
+}
+.task {
+  @include mixins.spacing();
+  border-bottom: 1px solid var(--Light-Grayish-Blue);
+}
+.check-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  @include mixins.check-box();
+  transition: var(--animation);
+}
+.task-text {
+  font-size: 2rem;
+}
+.icon-delete {
+  margin-left: auto;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  transition: var(--animation);
+}
+
+.task:hover {
+  .check-box {
+    border-radius: 50px;
+    @include mixins.gradient-circle();
+  }
+  .icon-delete {
+    visibility: visible;
+    opacity: 1;
+    pointer-events: initial;
+  }
+}
+.task.task--checked {
+  .check-box {
+    -webkit-mask: none;
+    background-image: var(--bg-gradient);
+  }
+  .task-text {
+    text-decoration: line-through;
+    color: var(--Light-Grayish-Blue);
+  }
+}
+
+.list-management-panel {
+  @include mixins.spacing();
+  justify-content: space-between;
+  font-size: 1.6rem;
+  color: var(--Dark-Grayish-Blue);
+}
+
+.filter {
+  display: flex;
+  gap: 2.2rem;
+  font-weight: 700;
+  margin-left: 4.6rem;
+  & > * {
+    transition: var(--animation);
+  }
+  & > *:hover {
+    color: var(--Very-Dark-Grayish-Blue);
+  }
+}
+.filter--selected {
+  color: var(--color-primary);
+}
+
+.btn-clear {
+  transition: var(--animation);
+  &:hover {
+    color: var(--Very-Dark-Grayish-Blue);
+  }
+}
+.drag-hint {
+  text-align: center;
+  margin: 5.4rem 0;
+}
+.items-counter,
+.drag-hint {
+  font-size: 1.6rem;
+  color: var(--Dark-Grayish-Blue);
+}
