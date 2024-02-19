@@ -17,12 +17,12 @@
       rel="stylesheet"
     />
     <link href="styles/styles.scss" rel="stylesheet" />
-    <script defer src="scripts/app.js"></script>
+    <script defer type="module" src="scripts/app.js"></script>
     <title>Todo app</title>
   </head>
 
   <body class="app">
-    <main class="main dark">
+    <main class="main">
       <div class="TODO-container">
         <header class="TODO-header">
           <h1 class="heading-primary">Todo</h1>
@@ -43,7 +43,7 @@
         </form>
         <div class="task-list-wrapper">
           <ul class="task-list">
-            <li class="task task--checked">
+            <li class="task">
               <div
                 class="icon check-box"
                 aria-label="Check as complete"
@@ -171,10 +171,9 @@
             </li>
           </ul>
           <div class="list-management-panel">
-            <!-- Add dynamic number -->
             <p class="items-counter"><span>0</span> items left</p>
             <div class="filter">
-              <button class="filter-all filter--selected">All</button>
+              <button class="filter-all">All</button>
               <button class="filter-active">Active</button>
               <button class="filter-completed">Completed</button>
             </div>
