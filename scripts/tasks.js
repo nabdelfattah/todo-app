@@ -82,4 +82,11 @@ export class Task {
         return this.tasksArr;
     }
   }
+
+  clearCompletedTasks() {
+    this.tasksArr = this.tasksArr.filter((task) => !task.isDone);
+    tasksListEl.innerHTML = '';
+    setStorageData('tasks', this.tasksArr);
+    this.renderTasksInUI(this.tasksArr);
+  }
 }

@@ -4,6 +4,7 @@ const inputEl = document.querySelector('.input');
 const tasksListEl = document.querySelector('.task-list');
 const listManagerEl = document.querySelector('.list-management-panel');
 const filterElements = document.querySelector('.filter');
+const clearCompletedBtn = document.querySelector('.btn-clear');
 const dragHintEl = document.querySelector('.drag-hint');
 
 function hideElements(...elements) {
@@ -15,6 +16,6 @@ function showElements(...elements) {
 
 export {
   mainEl, themeEl, inputEl, tasksListEl,
-  listManagerEl, filterElements, dragHintEl,
+  listManagerEl, filterElements, dragHintEl, clearCompletedBtn,
   hideElements, showElements,
 };
