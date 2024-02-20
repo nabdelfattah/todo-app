@@ -2,8 +2,11 @@
 // adjust background-image to stretch but not shrink
 @media (max-width: 1440px) {
   .app {
-    background-size: auto 36%;
-    background-position-x: 28%;
+    background-size: auto 30rem;
+    background-position-x: center;
+    &:has(.dark) {
+      background-position-x: 36%;
+    }
   }
 }
 // show the delete icon in mobile devices
@@ -20,8 +23,14 @@
   }
   .app {
     background-image: url(../images/bg-mobile-light.jpg);
-    background-size: 100% 32%;
-    background-position-x: 28%;
+    background-size: 100% 27rem;
+    &:has(.dark) {
+      background-image: url(../images/bg-mobile-dark.jpg);
+      background-position-x: 28%;
+      .filter {
+        background-color: hsl(235, 24%, 19%);
+      }
+    }
   }
   .main {
     width: 85%;
@@ -34,7 +43,6 @@
   input::placeholder {
     font-size: 1.6rem;
   }
-
   // adjuct the list managment panel
   .task-list-wrapper {
     position: relative;
@@ -60,16 +68,11 @@
     margin-top: 13rem;
   }
 }
-
-@media (max-width: 39em) {
-  .app:has(.dark) {
-    background-image: url(../images/bg-mobile-dark.jpg);
-    .filter {
-      background-color: hsl(235, 24%, 19%);
-    }
+@media (max-width: 400px) {
+  .app {
+    background-size: auto 27rem;
   }
 }
-
 /////////////////////////////////////////
 /// styles for phones
 @media (max-width: 380px) {
