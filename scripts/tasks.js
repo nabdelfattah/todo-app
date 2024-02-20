@@ -60,8 +60,26 @@ export class Task {
     e.currentTarget.closest('.task').remove();
   }
 
-  renderTasks(arr) {
+  renderTasksInUI(arr) {
     const tasksElArr = arr.map((item) => this.createTaskElement(item.content, item.isDone));
     tasksListEl.prepend(...tasksElArr.reverse());
+  }
+
+  filterHandler(e) {
+    const filterType = e.target.innerText.toLowerCase();
+    const filteredTasks = this.getFilteredTasks(filterType);
+    tasksListEl.innerHTML = '';
+    this.renderTasksInUI(filteredTasks);
+  }
+
+  getFilteredTasks(filter) {
+    switch (filter) {
+      case 'active':
+        return this.tasksArr.filter((el) => !el.isDone);
+      case 'completed':
+        return this.tasksArr.filter((el) => el.isDone);
+      default:
+        return this.tasksArr;
+    }
   }
 }

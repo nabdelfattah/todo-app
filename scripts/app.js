@@ -1,4 +1,6 @@
-import { inputEl, themeEl } from './DOM-Vendor';
+import {
+  dragHintEl, filterElements, hideElements, inputEl, listManagerEl, themeEl,
+} from './DOM-Vendor';
 import { getStorageData } from './storage';
 import { Task } from './tasks';
 import { toggleTheme, applyTheme } from './theme';
@@ -6,7 +8,9 @@ import { toggleTheme, applyTheme } from './theme';
 const storedTasks = getStorageData('tasks');
 const tasks = new Task(storedTasks || []);
 if (tasks.tasksArr.length) {
-  tasks.renderTasks(tasks.tasksArr);
+  tasks.renderTasksInUI(tasks.tasksArr);
+} else {
+  hideElements(listManagerEl, dragHintEl);
 }
 
 const theme = getStorageData('theme');
@@ -23,3 +27,4 @@ inputEl.addEventListener('keydown', (e) => {
     tasks.addTaskHandler(e);
   }
 });
+filterElements.addEventListener('click', (e) => tasks.filterHandler(e));
