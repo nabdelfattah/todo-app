@@ -2,6 +2,7 @@ const mainEl = document.querySelector('.main');
 const themeEl = document.querySelector('.theme-toggle-icon');
 const inputEl = document.querySelector('.input');
 const tasksListEl = document.querySelector('.task-list');
+const counterEl = document.querySelector('.items-counter').firstElementChild;
 const listManagerEl = document.querySelector('.list-management-panel');
 const filterElements = document.querySelector('.filter');
 const clearCompletedBtn = document.querySelector('.btn-clear');
@@ -15,7 +16,7 @@ function showElements(...elements) {
 }
 
 export {
-  mainEl, themeEl, inputEl, tasksListEl,
+  mainEl, themeEl, inputEl, tasksListEl, counterEl,
   listManagerEl, filterElements, dragHintEl, clearCompletedBtn,
   hideElements, showElements,
 };

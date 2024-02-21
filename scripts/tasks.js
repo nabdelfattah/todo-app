@@ -1,4 +1,4 @@
-import { tasksListEl } from './DOM-Vendor';
+import { dragHintEl, listManagerEl, tasksListEl } from './DOM-Vendor';
 import { setStorageData } from './storage';
 
 export class Task {
@@ -8,7 +8,9 @@ export class Task {
 
   addTaskHandler(e) {
     const taskText = e.currentTarget.value;
-    if (!taskText || this.isExist(taskText)) {
+    if (!taskText) return;
+    if (this.isExist(taskText)) {
+      alert('This task already exist.🗒️');
       return;
     }
     const taskEl = this.createTaskElement(taskText, false);
@@ -16,25 +18,8 @@ export class Task {
     tasksListEl.prepend(taskEl);
     setStorageData('tasks', this.tasksArr);
     e.currentTarget.value = '';
-  }
-
-  isExist(text) {
-    return this.tasksArr.some((task) => task.content == text);
-  }
-
-  createTaskElement(text, isCompleted) {
-    const taskEl = document.createElement('li');
-    taskEl.className = `task ${isCompleted ? 'task--checked' : ''}`;
-    taskEl.innerHTML = `
-    <div class="icon check-box" aria-label="Check as complete" tabindex="0" >
-      <img class="icon-check" src="images/icon-check.svg" alt="check icon" />
-    </div>
-    <p class="task-text">${text}</p>
-    <img class="icon icon-delete" aria-label="Delete task" tabindex="0"
-      src="images/icon-cross.svg" alt="delete icon" />`;
-    taskEl.firstElementChild.addEventListener('click', (e) => this.checkHandler(e));
-    taskEl.lastElementChild.addEventListener('click', (e) => this.deleteHandler(e));
-    return taskEl;
+    this.manageListManagementPanel();
+    this.manageDragHint();
   }
 
   checkHandler(e) {
@@ -58,11 +43,8 @@ export class Task {
     this.tasksArr.splice(itemIndex, 1);
     setStorageData('tasks', this.tasksArr);
     e.currentTarget.closest('.task').remove();
-  }
-
-  renderTasksInUI(arr) {
-    const tasksElArr = arr.map((item) => this.createTaskElement(item.content, item.isDone));
-    tasksListEl.prepend(...tasksElArr.reverse());
+    this.manageListManagementPanel();
+    this.manageDragHint();
   }
 
   filterHandler(e) {
@@ -70,6 +52,27 @@ export class Task {
     const filteredTasks = this.getFilteredTasks(filterType);
     tasksListEl.innerHTML = '';
     this.renderTasksInUI(filteredTasks);
+  }
+
+  createTaskElement(text, isCompleted) {
+    const taskEl = document.createElement('li');
+    taskEl.className = `task ${isCompleted ? 'task--checked' : ''}`;
+    taskEl.innerHTML = `
+    <div class="icon check-box" aria-label="Check as complete" tabindex="0" >
+      <img class="icon-check" src="images/icon-check.svg" alt="check icon" />
+    </div>
+    <p class="task-text">${text}</p>
+    <img class="icon icon-delete" aria-label="Delete task" tabindex="0"
+      src="images/icon-cross.svg" alt="delete icon" />`;
+    taskEl.firstElementChild.addEventListener('click', (e) => this.checkHandler(e));
+    taskEl.lastElementChild.addEventListener('click', (e) => this.deleteHandler(e));
+    return taskEl;
+  }
+
+  renderTasksInUI(arr) {
+    const tasksElArr = arr.map((item) => this.createTaskElement(item.content, item.isDone));
+    tasksListEl.prepend(...tasksElArr.reverse());
+    this.manageDragHint();
   }
 
   getFilteredTasks(filter) {
@@ -88,5 +91,17 @@ export class Task {
     tasksListEl.innerHTML = '';
     setStorageData('tasks', this.tasksArr);
     this.renderTasksInUI(this.tasksArr);
+  }
+
+  isExist(text) {
+    return this.tasksArr.some((task) => task.content == text);
+  }
+
+  manageDragHint() {
+    dragHintEl.style.display = this.tasksArr.length > 1 ? 'block' : 'none';
+  }
+
+  manageListManagementPanel() {
+    listManagerEl.style.display = this.tasksArr.length > 0 ? 'flex' : 'none';
   }
 }

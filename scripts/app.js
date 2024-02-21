@@ -9,7 +9,7 @@ import { toggleTheme, applyTheme } from './theme';
 // On App Start, fetch user's old data if exist
 
 const storedTasks = getStorageData('tasks');
-const tasks = new Task(storedTasks || []);
+export const tasks = new Task(storedTasks || []);
 if (tasks.tasksArr.length) {
   tasks.renderTasksInUI(tasks.tasksArr);
 } else {
