@@ -1,9 +1,14 @@
-import { dragHintEl, listManagerEl, tasksListEl } from './DOM-Vendor';
+import {
+  counterEl, dragHintEl, listManagerEl, tasksListEl,
+} from './DOM-Vendor';
 import { setStorageData } from './storage';
 
 export class Task {
   constructor(tasksArr = []) {
     this.tasksArr = tasksArr;
+    this.excessCounter = counterEl.innerText;
+    this.excessTasksArr = [];
+    this.hiddenTasksElArr = [];
   }
 
   addTaskHandler(e) {
@@ -20,6 +25,7 @@ export class Task {
     e.currentTarget.value = '';
     this.manageListManagementPanel();
     this.manageDragHint();
+    this.hideExcessTasks();
   }
 
   checkHandler(e) {
@@ -43,6 +49,7 @@ export class Task {
     this.tasksArr.splice(itemIndex, 1);
     setStorageData('tasks', this.tasksArr);
     e.currentTarget.closest('.task').remove();
+    this.showExcessTasks();
     this.manageListManagementPanel();
     this.manageDragHint();
   }
@@ -73,6 +80,7 @@ export class Task {
     const tasksElArr = arr.map((item) => this.createTaskElement(item.content, item.isDone));
     tasksListEl.prepend(...tasksElArr.reverse());
     this.manageDragHint();
+    this.hideExcessTasks();
   }
 
   getFilteredTasks(filter) {
@@ -103,5 +111,32 @@ export class Task {
 
   manageListManagementPanel() {
     listManagerEl.style.display = this.tasksArr.length > 0 ? 'flex' : 'none';
+  }
+
+  hideExcessTasks() {
+    const tasksElArr = Array.from(tasksListEl.children);
+    if (tasksElArr.length > 6) {
+      const excessTasks = tasksElArr.slice(6);
+      excessTasks.forEach((task) => {
+        this.hiddenTasksElArr.push(task);
+        task.style.display = 'none';
+      });
+      this.excessCounter = excessTasks.length;
+      counterEl.innerText = this.excessCounter;
+    }
+  }
+
+  showExcessTasks() {
+    if (this.excessCounter) {
+      for (let i = 0; i < this.excessCounter; i++) {
+        const popedEl = this.hiddenTasksElArr.shift();
+        popedEl.style.display = 'flex';
+        this.excessCounter -= 1;
+        counterEl.innerText = this.excessCounter;
+        if (tasksListEl.children.length == 6) {
+          return;
+        }
+      }
+    }
   }
 }
