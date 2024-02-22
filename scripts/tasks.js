@@ -12,16 +12,19 @@ export class Task {
   }
 
   addTaskHandler(e) {
-    const taskText = e.currentTarget.value;
+    const taskText = e.currentTarget.value.trim();
     if (!taskText) return;
     if (this.isExist(taskText)) {
       alert('This task already exist.🗒️');
       return;
     }
+    // create task in UI
     const taskEl = this.createTaskElement(taskText, false);
-    this.tasksArr.push({ content: taskText, isDone: false });
     tasksListEl.prepend(taskEl);
+    // create task in local storage
+    this.tasksArr.push({ content: taskText, isDone: false });
     setStorageData('tasks', this.tasksArr);
+    // reset the input field
     e.currentTarget.value = '';
     this.manageListManagementPanel();
     this.manageDragHint();
@@ -30,6 +33,7 @@ export class Task {
 
   checkHandler(e) {
     let isCompleted;
+    // edit task in UI
     const taskText = e.currentTarget.nextElementSibling.innerText;
     if (e.currentTarget.parentElement.classList.contains('task--checked')) {
       e.currentTarget.parentElement.classList.remove('task--checked');
@@ -38,16 +42,19 @@ export class Task {
       e.currentTarget.parentElement.classList.add('task--checked');
       isCompleted = true;
     }
+    // edit task in local storage
     const itemIndex = this.tasksArr.findIndex((item) => item.content == taskText);
     this.tasksArr[itemIndex].isDone = isCompleted;
     setStorageData('tasks', this.tasksArr);
   }
 
   deleteHandler(e) {
+    // delete from local storage
     const taskText = e.currentTarget.previousElementSibling.innerText;
     const itemIndex = this.tasksArr.findIndex((item) => item.content == taskText);
     this.tasksArr.splice(itemIndex, 1);
     setStorageData('tasks', this.tasksArr);
+    // delete from UI
     e.currentTarget.closest('.task').remove();
     this.showExcessTasks();
     this.manageListManagementPanel();
@@ -55,10 +62,15 @@ export class Task {
   }
 
   filterHandler(e) {
+    // get filter type
     const filterType = e.target.innerText.toLowerCase();
+    // get Selected tasks
     const filteredTasks = this.getFilteredTasks(filterType);
+    // remove all tasks from UI
     tasksListEl.innerHTML = '';
+    // rerender task as selected
     this.renderTasksInUI(filteredTasks);
+    this.manageDragHint();
   }
 
   createTaskElement(text, isCompleted) {
@@ -81,6 +93,7 @@ export class Task {
     tasksListEl.prepend(...tasksElArr.reverse());
     this.manageDragHint();
     this.hideExcessTasks();
+    this.showExcessTasks();
   }
 
   getFilteredTasks(filter) {
@@ -95,48 +108,71 @@ export class Task {
   }
 
   clearCompletedTasks() {
+    // get active tasks
     this.tasksArr = this.tasksArr.filter((task) => !task.isDone);
+    // remove all tasks from UI
     tasksListEl.innerHTML = '';
-    setStorageData('tasks', this.tasksArr);
+    // render active tasks in UI
     this.renderTasksInUI(this.tasksArr);
-  }
-
-  isExist(text) {
-    return this.tasksArr.some((task) => task.content == text);
-  }
-
-  manageDragHint() {
-    dragHintEl.style.display = this.tasksArr.length > 1 ? 'block' : 'none';
-  }
-
-  manageListManagementPanel() {
-    listManagerEl.style.display = this.tasksArr.length > 0 ? 'flex' : 'none';
+    // store only active tasks in local storage
+    setStorageData('tasks', this.tasksArr);
+    this.manageListManagementPanel();
+    this.showExcessTasks();
   }
 
   hideExcessTasks() {
-    const tasksElArr = Array.from(tasksListEl.children);
-    if (tasksElArr.length > 6) {
-      const excessTasks = tasksElArr.slice(6);
+    // get all the li elements
+    const tasksElsArr = Array.from(tasksListEl.children);
+    // if they are > 6, then, hide the excess
+    if (tasksElsArr.length > 6) {
+      // get the 7th li and the rest
+      const excessTasks = tasksElsArr.slice(6);
+      this.hiddenTasksElArr = excessTasks;
+      // hide them
       excessTasks.forEach((task) => {
-        this.hiddenTasksElArr.push(task);
         task.style.display = 'none';
       });
+      // update the excessCounter, update the UI counter
       this.excessCounter = excessTasks.length;
       counterEl.innerText = this.excessCounter;
     }
   }
 
   showExcessTasks() {
+    // have hidden DOM elements
     if (this.excessCounter) {
+      // loop for the number of hidden elements
       for (let i = 0; i < this.excessCounter; i++) {
-        const popedEl = this.hiddenTasksElArr.shift();
-        popedEl.style.display = 'flex';
-        this.excessCounter -= 1;
-        counterEl.innerText = this.excessCounter;
-        if (tasksListEl.children.length == 6) {
+        const displayedTasks = this.getDisplayedTasks();
+        if (displayedTasks.length == 6) {
           return;
         }
+        // remove the element that should be shown from hiddentasksElArr
+        const targetEl = this.hiddenTasksElArr[0];
+        this.hiddenTasksElArr.splice(0, 1);
+        // reveal that element
+        targetEl.style.display = 'flex';
+        // decrement the excessCounter, update the UI counter
+        this.excessCounter -= 1;
+        counterEl.innerText = this.excessCounter;
       }
     }
+  }
+
+  isExist(text) {
+    return this.tasksArr.some((task) => task.content == text);
+  }
+
+  getDisplayedTasks() {
+    return Array.from(tasksListEl.children).filter((el) => el.style.display != 'none');
+  }
+
+  manageDragHint() {
+    const displayedTasks = this.getDisplayedTasks();
+    dragHintEl.style.display = displayedTasks.length > 1 ? 'block' : 'none';
+  }
+
+  manageListManagementPanel() {
+    listManagerEl.style.display = this.tasksArr.length > 0 ? 'flex' : 'none';
   }
 }
