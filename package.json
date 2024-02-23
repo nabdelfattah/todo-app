@@ -1,0 +1,23 @@
+{
+  "name": "todo-app",
+  "version": "1.0.0",
+  "description": "This project is a TODO App that allows you to add, remove and sort your tasks. It has a filter feature where you can hide completed tasks.",
+  "main": "index.js",
+  "scripts": {
+    "start": "vite",
+    "build": "build vite"
+  },
+  "keywords": [
+    "TODO",
+    "Task Manager"
+  ],
+  "author": "Nada W. Abdelfattah",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^8.56.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.29.1",
+    "sass": "^1.71.0",
+    "vite": "^5.1.3"
+  }
+}
