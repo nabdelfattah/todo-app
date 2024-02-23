@@ -1,14 +1,17 @@
 import {
   counterEl, dragHintEl, listManagerEl, tasksListEl,
 } from './DOM-Vendor';
-import { setStorageData } from './storage';
+import { getStorageData, setStorageData } from './storage';
 
 export class Task {
   constructor(tasksArr = []) {
     this.tasksArr = tasksArr;
+    this.currentFilterType = getStorageData('filter') || 'all';
     this.excessCounter = counterEl.innerText;
     this.excessTasksArr = [];
     this.hiddenTasksElArr = [];
+    this.id = this.tasksArr[this.tasksArr.length - 1]
+      ? this.tasksArr[this.tasksArr.length - 1].id : 0;
   }
 
   addTaskHandler(e) {
@@ -18,12 +21,13 @@ export class Task {
       alert('This task already exist.🗒️');
       return;
     }
-    // create task in UI
-    const taskEl = this.createTaskElement(taskText, false);
-    tasksListEl.prepend(taskEl);
+    const id = this.getID();
     // create task in local storage
-    this.tasksArr.push({ content: taskText, isDone: false });
+    this.tasksArr.push({ id, content: taskText, isDone: false });
     setStorageData('tasks', this.tasksArr);
+    // create task in UI
+    const taskEl = this.createTaskElement(id, taskText, false);
+    tasksListEl.prepend(taskEl);
     // reset the input field
     e.currentTarget.value = '';
     this.manageListManagementPanel();
@@ -64,6 +68,8 @@ export class Task {
   filterHandler(e) {
     // get filter type
     const filterType = e.target.innerText.toLowerCase();
+    this.currentFilterType = filterType;
+    setStorageData('filter', filterType);
     // get Selected tasks
     const filteredTasks = this.getFilteredTasks(filterType);
     // remove all tasks from UI
@@ -73,9 +79,11 @@ export class Task {
     this.manageDragHint();
   }
 
-  createTaskElement(text, isCompleted) {
+  createTaskElement(id, text, isCompleted) {
     const taskEl = document.createElement('li');
     taskEl.className = `task ${isCompleted ? 'task--checked' : ''}`;
+    taskEl.setAttribute('data-value', id);
+    taskEl.draggable = 'true';
     taskEl.innerHTML = `
     <div class="icon check-box" aria-label="Check as complete" tabindex="0" >
       <img class="icon-check" src="images/icon-check.svg" alt="check icon" />
@@ -85,11 +93,15 @@ export class Task {
       src="images/icon-cross.svg" alt="delete icon" />`;
     taskEl.firstElementChild.addEventListener('click', (e) => this.checkHandler(e));
     taskEl.lastElementChild.addEventListener('click', (e) => this.deleteHandler(e));
+    taskEl.addEventListener('dragstart', (e) => this.dragStartHandler(e));
+    taskEl.addEventListener('dragover', (e) => this.dragOverHandler(e));
+    taskEl.addEventListener('drop', (e) => this.dropHandler(e));
     return taskEl;
   }
 
   renderTasksInUI(arr) {
-    const tasksElArr = arr.map((item) => this.createTaskElement(item.content, item.isDone));
+    const tasksElArr = arr
+      .map((item) => this.createTaskElement(item.id, item.content, item.isDone));
     tasksListEl.prepend(...tasksElArr.reverse());
     this.manageDragHint();
     this.hideExcessTasks();
@@ -163,6 +175,10 @@ export class Task {
     return this.tasksArr.some((task) => task.content == text);
   }
 
+  getID() {
+    return ++this.id;
+  }
+
   getDisplayedTasks() {
     return Array.from(tasksListEl.children).filter((el) => el.style.display != 'none');
   }
@@ -174,5 +190,32 @@ export class Task {
 
   manageListManagementPanel() {
     listManagerEl.style.display = this.tasksArr.length > 0 ? 'flex' : 'none';
+  }
+
+  // drag and drop feature
+  dragStartHandler(e) {
+    e.dataTransfer.effectAllowed = 'move';
+    e.dataTransfer.setData('text/plain', e.currentTarget.dataset.value);
+  }
+
+  dragOverHandler(e) {
+    if (e.dataTransfer.types[0] == 'text/plain') e.preventDefault();
+  }
+
+  dropHandler(e) {
+    const draggedElID = e.dataTransfer.getData('text/plain');
+    const draggedEl = tasksListEl.querySelector(`[data-value="${draggedElID}"]`);
+    // find index of each element in the this.tasksArr
+    const draggedElIndex = this.tasksArr.findIndex((el) => el.id == draggedEl.dataset.value);
+    const targetElIndex = this.tasksArr.findIndex((el) => el.id == e.currentTarget.dataset.value);
+    // swap the 2 elements in this.taskArr
+    [this.tasksArr[draggedElIndex], this.tasksArr[targetElIndex]] = [this.tasksArr[targetElIndex],
+      this.tasksArr[draggedElIndex]];
+    // assign this.taskArr to the array in local storage
+    setStorageData('tasks', this.tasksArr);
+    // rerender the elements based of the new this.taskArr, accourding to the current filter
+    const toShowTasks = this.getFilteredTasks(this.currentFilterType);
+    tasksListEl.innerHTML = '';
+    this.renderTasksInUI(toShowTasks);
   }
 }

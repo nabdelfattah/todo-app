@@ -11,7 +11,7 @@ import { toggleTheme, applyTheme } from './theme';
 const storedTasks = getStorageData('tasks');
 export const tasks = new Task(storedTasks || []);
 if (tasks.tasksArr.length) {
-  tasks.renderTasksInUI(tasks.tasksArr);
+  tasks.renderTasksInUI(tasks.getFilteredTasks(tasks.currentFilterType));
 } else {
   hideElements(listManagerEl, dragHintEl);
 }
