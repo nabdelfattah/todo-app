@@ -67,6 +67,19 @@
   .drag-hint {
     margin-top: 13rem;
   }
+  .reset {
+    position: sticky;
+    bottom: -7.8rem;
+    right: 5rem;
+    background-color: inherit;
+    border: none;
+    padding: 0;
+    box-shadow: 0 2.4rem 4.8rem transparent;
+  }
+  .app:has(.dark) .reset {
+    border: none;
+    color: inherit;
+  }
 }
 @media (max-width: 400px) {
   .app {
