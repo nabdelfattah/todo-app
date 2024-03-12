@@ -30,7 +30,11 @@ export class Task {
     setStorageData('tasks', this.tasksArr);
     // create task in UI
     const taskEl = this.createTaskElement(id, taskText, false);
-    tasksListEl.prepend(taskEl);
+    if (getStorageData('filter') == 'completed') {
+      this.filterHandler('active')
+    } else {
+      tasksListEl.prepend(taskEl);
+    }
     // reset the input field
     e.currentTarget.value = '';
     this.manageListManagementPanel();
@@ -68,9 +72,9 @@ export class Task {
     this.manageDragHint();
   }
 
-  filterHandler(e) {
+  filterHandler(filterType) {
     // get filter type
-    const filterType = e.target.innerText.toLowerCase();
+    console.log('fires.')
     this.currentFilterType = filterType;
     setStorageData('filter', filterType);
     // get Selected tasks

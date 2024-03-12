@@ -34,7 +34,7 @@ inputEl.addEventListener('keydown', (e) => {
     tasks.addTaskHandler(e);
   }
 });
-filterElements.addEventListener('click', (e) => tasks.filterHandler(e));
+filterElements.addEventListener('click', (e) => tasks.filterHandler(e.target.innerText.toLowerCase()));
 clearCompletedBtn.addEventListener('click', tasks.clearCompletedTasks.bind(tasks));
 
 document.querySelector('.reset').addEventListener('click', tasks.resetHandler.bind(tasks))
