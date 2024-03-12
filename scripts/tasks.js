@@ -79,6 +79,16 @@ export class Task {
     this.manageDragHint();
   }
 
+  resetHandler(){
+    localStorage.removeItem('theme');
+    localStorage.removeItem('tasks');
+    localStorage.removeItem('filter');
+    this.tasksArr.splice(0)
+    tasksListEl.innerHTML = "";
+    this.manageListManagementPanel()
+    this.manageDragHint()
+  }
+
   createTaskElement(id, text, isCompleted) {
     const taskEl = document.createElement('li');
     taskEl.className = `task ${isCompleted ? 'task--checked' : ''}`;
@@ -131,6 +141,7 @@ export class Task {
     this.manageListManagementPanel();
     this.showExcessTasks();
   }
+
 
   hideExcessTasks() {
     // get all the li elements

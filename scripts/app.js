@@ -33,3 +33,5 @@ inputEl.addEventListener('keydown', (e) => {
 });
 filterElements.addEventListener('click', (e) => tasks.filterHandler(e));
 clearCompletedBtn.addEventListener('click', tasks.clearCompletedTasks.bind(tasks));
+
+document.querySelector('.reset').addEventListener('click', tasks.resetHandler.bind(tasks))

@@ -50,6 +50,7 @@
 
 .task-list-wrapper {
   box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 .task {
   @include mixins.spacing();
@@ -133,4 +134,19 @@
 .drag-hint {
   font-size: 1.6rem;
   color: var(--Dark-Grayish-Blue);
+}
+
+.reset {
+  position: absolute;
+  left: 106%;
+  padding: 1rem 2rem;
+  background-color: var(--Very-Light-Gray);
+  border-radius: var(--border-radius);
+  border: 1px solid var(--Light-Grayish-Blue);
+  box-shadow: 0 2.4rem 4.8rem rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+.reset:hover {
+  box-shadow: 0 2.4rem 4.8rem transparent;
+  background-color: #fff;
 }
