@@ -74,7 +74,6 @@ export class Task {
 
   filterHandler(filterType) {
     // get filter type
-    console.log('fires.')
     this.currentFilterType = filterType;
     setStorageData('filter', filterType);
     // get Selected tasks
