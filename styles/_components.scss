@@ -148,7 +148,7 @@
   transition: all 0.3s;
 }
 .reset:hover {
-  background-color: #fff;
+  color: var(--Very-Dark-Grayish-Blue);
   box-shadow: 0 2.4rem 4.8rem transparent;
 }
 .app:has(.dark) .reset {
@@ -156,5 +156,5 @@
   background-color: hsl(235, 24%, 19%);
 }
 .app:has(.dark) .reset:hover {
-  background-color: hsl(235, 21%, 11%);
+  color: var(--Light-Grayish-Blue);
 }
