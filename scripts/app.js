@@ -6,6 +6,9 @@ import { getStorageData } from './storage';
 import { Task } from './tasks';
 import { toggleTheme, applyTheme } from './theme';
 
+import moonIcon from '../images/icon-moon.svg';
+import sunIcon from '../images/icon-sun.svg';
+
 // On App Start, fetch user's old data if exist
 
 const storedTasks = getStorageData('tasks');
@@ -18,9 +21,9 @@ if (tasks.tasksArr.length) {
 
 const theme = getStorageData('theme');
 if (!theme || theme == 'light') {
-  applyTheme('main', 'light', '../images/icon-moon.svg');
+  applyTheme('main', 'light', moonIcon);
 } else {
-  applyTheme('main dark', 'dark', '../images/icon-sun.svg');
+  applyTheme('main dark', 'dark', sunIcon);
 }
 
 // App Events

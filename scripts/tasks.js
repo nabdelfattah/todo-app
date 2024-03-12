@@ -2,6 +2,9 @@ import {
   counterEl, dragHintEl, listManagerEl, tasksListEl,
 } from './DOM-Vendor';
 import { getStorageData, setStorageData } from './storage';
+import checkIcon from '../images/icon-check.svg';
+import crossIcon from '../images/icon-cross.svg';
+
 
 export class Task {
   constructor(tasksArr = []) {
@@ -96,11 +99,11 @@ export class Task {
     taskEl.draggable = 'true';
     taskEl.innerHTML = `
     <div class="icon check-box" aria-label="Check as complete" tabindex="0" >
-      <img class="icon-check" src="images/icon-check.svg" alt="check icon" />
+      <img class="icon-check" src="${checkIcon}" alt="check icon" />
     </div>
     <p class="task-text">${text}</p>
     <img class="icon icon-delete" aria-label="Delete task" tabindex="0"
-      src="images/icon-cross.svg" alt="delete icon" />`;
+      src="${crossIcon}" alt="delete icon" />`;
     taskEl.firstElementChild.addEventListener('click', (e) => this.checkHandler(e));
     taskEl.lastElementChild.addEventListener('click', (e) => this.deleteHandler(e));
     taskEl.addEventListener('dragstart', (e) => this.dragStartHandler(e));
